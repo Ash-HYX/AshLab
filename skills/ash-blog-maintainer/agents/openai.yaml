@@ -1,0 +1,4 @@
+interface:
+  display_name: "Ash Blog Maintainer"
+  short_description: "Maintain AshLab posts, wiki sync, and checks"
+  default_prompt: "Use $ash-blog-maintainer to update an AshLab article and verify the local build."

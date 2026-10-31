@@ -25,3 +25,9 @@ bun.lockb
 .idea/
 *.iml
 
+
+# local agent and editor state
+.pi/
+.claude/
+.codex/
+.cursor/

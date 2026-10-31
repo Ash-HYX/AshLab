@@ -8,12 +8,12 @@ import { Icon } from "astro-icon/components";
 import ImageWrapper from "../components/misc/ImageWrapper.astro";
 import TOC from "../components/widget/TOC.astro";
 import { siteConfig } from "../config";
-import { url } from "../utils/url-utils";
 import {
 	BANNER_HEIGHT,
 	BANNER_HEIGHT_EXTEND,
 	MAIN_PANEL_OVERLAPS_BANNER_HEIGHT,
 } from "../constants/constants";
+import { url } from "../utils/url-utils";
 import Layout from "./Layout.astro";
 
 interface Props {
@@ -36,10 +36,11 @@ const {
 const hasBannerCredit =
 	siteConfig.banner.enable && siteConfig.banner.credit.enable;
 const hasBannerLink = !!siteConfig.banner.credit.url;
-const bannerSources = (siteConfig.banner.sources?.length
-	? siteConfig.banner.sources
-	: [siteConfig.banner.src]
-).map((source) => source.startsWith("/") ? url(source) : source);
+const bannerSources = (
+	siteConfig.banner.sources?.length
+		? siteConfig.banner.sources
+		: [siteConfig.banner.src]
+).map((source) => (source.startsWith("/") ? url(source) : source));
 
 const mainPanelTop = siteConfig.banner.enable
 	? `calc(${BANNER_HEIGHT}vh - ${MAIN_PANEL_OVERLAPS_BANNER_HEIGHT}rem)`

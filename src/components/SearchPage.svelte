@@ -23,14 +23,20 @@ let results: DisplayResult[] = posts;
 let searching = false;
 let pagefindReady = false;
 
-const categories = [...new Set(posts.flatMap((post) => post.categories))].sort();
+const categories = [
+	...new Set(posts.flatMap((post) => post.categories)),
+].sort();
 const tags = [...new Set(posts.flatMap((post) => post.tags))].sort();
-const years = [...new Set(posts.map((post) => post.year))].sort((a, b) => b - a);
+const years = [...new Set(posts.map((post) => post.year))].sort(
+	(a, b) => b - a,
+);
 
 function matchesFilters(post: PostIndex) {
-	return (!category || post.categories.includes(category)) &&
+	return (
+		(!category || post.categories.includes(category)) &&
 		(!tag || post.tags.includes(tag)) &&
-		(!year || post.year === Number(year));
+		(!year || post.year === Number(year))
+	);
 }
 
 async function runSearch() {
@@ -39,18 +45,33 @@ async function runSearch() {
 	try {
 		if (query && import.meta.env.PROD && pagefindReady && window.pagefind) {
 			const response = await window.pagefind.search(query);
-			const pagefindResults = await Promise.all(response.results.map((item) => item.data()));
+			const pagefindResults = await Promise.all(
+				response.results.map((item) => item.data()),
+			);
 			results = pagefindResults.flatMap((item) => {
 				const pathname = new URL(item.url, window.location.origin).pathname;
-				const post = posts.find((candidate) => pathname === new URL(candidate.url, window.location.origin).pathname);
+				const post = posts.find(
+					(candidate) =>
+						pathname ===
+						new URL(candidate.url, window.location.origin).pathname,
+				);
 				if (!post || !matchesFilters(post)) return [];
 				return [{ ...post, excerpt: item.excerpt }];
 			});
 		} else {
 			const normalized = query.toLocaleLowerCase();
 			results = posts.filter((post) => {
-				const haystack = [post.title, post.description, ...post.tags, ...post.categories].join(" ").toLocaleLowerCase();
-				return (!normalized || haystack.includes(normalized)) && matchesFilters(post);
+				const haystack = [
+					post.title,
+					post.description,
+					...post.tags,
+					...post.categories,
+				]
+					.join(" ")
+					.toLocaleLowerCase();
+				return (
+					(!normalized || haystack.includes(normalized)) && matchesFilters(post)
+				);
 			});
 		}
 	} finally {
@@ -67,7 +88,13 @@ onMount(() => {
 	return () => document.removeEventListener("pagefindready", syncPagefind);
 });
 
-$: keyword, category, tag, year, runSearch();
+$: {
+	keyword;
+	category;
+	tag;
+	year;
+	runSearch();
+}
 </script>
 
 <div class="card-base p-5 md:p-7 mb-4 onload-animation">

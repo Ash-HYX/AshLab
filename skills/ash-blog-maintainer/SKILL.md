@@ -49,11 +49,13 @@ description: 维护 AshLab 静态博客中的 Markdown 文章，包括新增或�
 完成编辑后执行：
 
 ```bash
+pnpm exec biome ci ./src --reporter=summary
 pnpm check
 pnpm build
 ```
 
-- 两个命令都成功才算完成。
+- 三个命令都成功才算完成。GitHub 的 `Code quality` 工作流会检查整个 `src`，不能因为只改了 Markdown 就跳过 Biome。
+- Biome 报 `File content differs from formatting output` 或 `Sort these imports` 时，运行 `pnpm exec biome check --write ./src`，审查机械修改后再次执行 Biome CI。
 - 允许报告项目已有的非阻断提示，但不能把构建错误当作成功。
 - 草稿在开发模式中可能可见，但生产构建会隐藏；不要仅根据开发页面判断文章已经发布。
 - 如果依赖已经安装而 `pnpm` 仅因包管理器元数据联网失败，可使用仓库 `node_modules/.bin` 中的本地 Astro 和 Pagefind 可执行文件完成等价检查。不要擅自升级依赖。

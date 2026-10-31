@@ -12,7 +12,8 @@ export const timeline = [
 	{
 		date: "2026-10-31",
 		title: "Ash 博客开始建设",
-		description: "基于 Fuwari 进行二次开发，整理旧有学习笔记并建立长期维护流程。",
+		description:
+			"基于 Fuwari 进行二次开发，整理旧有学习笔记并建立长期维护流程。",
 		type: "site",
 	},
 	{

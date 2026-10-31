@@ -2,7 +2,11 @@
 import PageHeader from "@components/PageHeader.astro";
 import SearchPage from "@components/SearchPage.svelte";
 import MainGridLayout from "@layouts/MainGridLayout.astro";
-import { getPostCategories, getPostSlug, getSortedPosts } from "@utils/content-utils";
+import {
+	getPostCategories,
+	getPostSlug,
+	getSortedPosts,
+} from "@utils/content-utils";
 import { getPostUrlBySlug } from "@utils/url-utils";
 
 const entries = await getSortedPosts();

@@ -5,14 +5,19 @@ import Markdown from "@components/misc/Markdown.astro";
 import I18nKey from "@i18n/i18nKey";
 import { i18n } from "@i18n/translation";
 import MainGridLayout from "@layouts/MainGridLayout.astro";
-import { getPostCategories, getPostImage, getPostSlug, getSortedPosts } from "@utils/content-utils";
+import {
+	getPostCategories,
+	getPostImage,
+	getPostSlug,
+	getSortedPosts,
+} from "@utils/content-utils";
 import { getDir, getPostUrlBySlug } from "@utils/url-utils";
 import { Icon } from "astro-icon/components";
 import { licenseConfig } from "src/config";
-import ImageWrapper from "../../components/misc/ImageWrapper.astro";
-import PostMetadata from "../../components/PostMeta.astro";
-import PageView from "../../components/PageView.astro";
 import MermaidRenderer from "../../components/MermaidRenderer.astro";
+import ImageWrapper from "../../components/misc/ImageWrapper.astro";
+import PageView from "../../components/PageView.astro";
+import PostMetadata from "../../components/PostMeta.astro";
 import { profileConfig, siteConfig } from "../../config";
 import { formatDateToYYYYMMDD } from "../../utils/date-utils";
 
@@ -32,12 +37,20 @@ const allPosts = await getSortedPosts();
 const relatedPosts = allPosts
 	.filter((post) => getPostSlug(post) !== postSlug)
 	.map((post) => {
-		const commonTags = post.data.tags.filter((tag) => entry.data.tags.includes(tag)).length;
-		const commonCategories = getPostCategories(post.data).filter((category) => postCategories.includes(category)).length;
+		const commonTags = post.data.tags.filter((tag) =>
+			entry.data.tags.includes(tag),
+		).length;
+		const commonCategories = getPostCategories(post.data).filter((category) =>
+			postCategories.includes(category),
+		).length;
 		return { post, score: commonTags * 2 + commonCategories };
 	})
 	.filter((item) => item.score > 0)
-	.sort((a, b) => b.score - a.score || b.post.data.published.getTime() - a.post.data.published.getTime())
+	.sort(
+		(a, b) =>
+			b.score - a.score ||
+			b.post.data.published.getTime() - a.post.data.published.getTime(),
+	)
 	.slice(0, 3)
 	.map((item) => item.post);
 const { Content, headings } = await entry.render();

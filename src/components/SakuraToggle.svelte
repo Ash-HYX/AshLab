@@ -47,7 +47,10 @@ function resize() {
 	canvas.style.height = `${height}px`;
 	context = canvas.getContext("2d");
 	context?.setTransform(ratio, 0, 0, ratio, 0, 0);
-	const count = Math.min(window.innerWidth < 768 ? 28 : 52, Math.floor(width / 22));
+	const count = Math.min(
+		window.innerWidth < 768 ? 28 : 52,
+		Math.floor(width / 22),
+	);
 	petals = Array.from({ length: count }, () => createPetal(false));
 }
 
@@ -87,7 +90,9 @@ function toggle() {
 }
 
 onMount(() => {
-	const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+	const reducedMotion = window.matchMedia(
+		"(prefers-reduced-motion: reduce)",
+	).matches;
 	const stored = localStorage.getItem(storageKey);
 	enabled = stored === null ? !reducedMotion : stored === "true";
 	resize();

@@ -57,14 +57,16 @@ onMount(async () => {
 		filteredPosts = filteredPosts.filter((post) => {
 			const postCategories = post.data.categories?.length
 				? post.data.categories
-				: post.data.category ? [post.data.category] : [];
+				: post.data.category
+					? [post.data.category]
+					: [];
 			return postCategories.some((category) => categories.includes(category));
 		});
 	}
 
 	if (uncategorized) {
-		filteredPosts = filteredPosts.filter((post) =>
-			!(post.data.categories?.length || post.data.category),
+		filteredPosts = filteredPosts.filter(
+			(post) => !(post.data.categories?.length || post.data.category),
 		);
 	}
 

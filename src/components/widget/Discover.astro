@@ -1,0 +1,49 @@
+---
+import { getPostSlug, getSortedPosts } from "@utils/content-utils";
+import { getPostUrlBySlug } from "@utils/url-utils";
+import { Icon } from "astro-icon/components";
+
+const posts = await getSortedPosts();
+const recent = posts.slice(0, 4);
+const randomCandidates = posts.map((post) => ({
+	title: post.data.title,
+	url: getPostUrlBySlug(getPostSlug(post)),
+}));
+---
+
+<section class="card-base p-4 onload-animation" style="animation-delay:250ms">
+	<div class="font-bold text-75 mb-3 flex items-center gap-2">
+		<Icon name="material-symbols:update-rounded" class="text-xl text-[var(--primary)]" />
+		最近更新
+	</div>
+	<div class="space-y-1">
+		{recent.map((post) => (
+			<a href={getPostUrlBySlug(getPostSlug(post))} class="btn-plain !justify-start rounded-lg px-3 py-2 text-sm font-medium truncate">
+				{post.data.title}
+			</a>
+		))}
+	</div>
+	<button id="random-post-button" type="button" class="btn-regular w-full rounded-lg h-10 mt-3 gap-2 font-bold active:scale-95" data-posts={JSON.stringify(randomCandidates)}>
+		<Icon name="material-symbols:shuffle-rounded" class="text-lg" />随机文章
+	</button>
+</section>
+
+<script>
+function bindRandomPostButton() {
+	const button = document.getElementById("random-post-button");
+	if (!(button instanceof HTMLButtonElement) || button.dataset.bound === "true") return;
+	button.dataset.bound = "true";
+	button.addEventListener("click", () => {
+		try {
+			const posts = JSON.parse(button.dataset.posts || "[]");
+			if (!Array.isArray(posts) || posts.length === 0) return;
+			const post = posts[Math.floor(Math.random() * posts.length)];
+			window.location.href = post.url;
+		} catch (error) {
+			console.warn("Unable to open a random post.", error);
+		}
+	});
+}
+bindRandomPostButton();
+document.addEventListener("swup:contentReplaced", bindRandomPostButton);
+</script>

@@ -1,0 +1,23 @@
+---
+import PageHeader from "@components/PageHeader.astro";
+import MainGridLayout from "@layouts/MainGridLayout.astro";
+import { getCategoryList } from "@utils/content-utils";
+import { Icon } from "astro-icon/components";
+
+const categories = await getCategoryList();
+---
+
+<MainGridLayout title="分类">
+	<PageHeader title="分类" description="按主题浏览 Ash 的文章" icon="material-symbols:book-2-outline-rounded" />
+	<div class="grid sm:grid-cols-2 gap-4 mb-4">
+		{categories.map((category, index) => (
+			<a href={`/categories/${encodeURIComponent(category.name)}/`} class="card-base btn-card !justify-between px-5 py-4 active:scale-[0.98] onload-animation" style={`animation-delay:${index * 40}ms`}>
+				<div class="min-w-0">
+					<div class="font-bold text-lg text-90 truncate">{category.name}</div>
+					<div class="text-sm text-50 mt-1">{category.count} 篇文章</div>
+				</div>
+				<Icon name="material-symbols:chevron-right-rounded" class="text-3xl text-[var(--primary)]" />
+			</a>
+		))}
+	</div>
+</MainGridLayout>

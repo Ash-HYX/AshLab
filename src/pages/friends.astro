@@ -1,0 +1,24 @@
+---
+import PageHeader from "@components/PageHeader.astro";
+import MainGridLayout from "@layouts/MainGridLayout.astro";
+import { friends } from "@/data/site";
+import { Icon } from "astro-icon/components";
+---
+
+<MainGridLayout title="友链">
+	<PageHeader title="友链" description="一些值得拜访的站点" icon="material-symbols:group-outline-rounded" />
+	<div class="grid sm:grid-cols-2 gap-4 mb-4">
+		{friends.map((friend) => (
+			<a href={friend.url} target="_blank" rel="noopener noreferrer" class="card-base btn-card !justify-start gap-4 p-4 active:scale-[0.98] onload-animation">
+				<div class="w-14 h-14 shrink-0 rounded-lg bg-[var(--btn-regular-bg)] flex items-center justify-center">
+					<Icon name="material-symbols:public" class="text-3xl text-[var(--primary)]" />
+				</div>
+				<div class="min-w-0 flex-1">
+					<div class="font-bold text-lg text-90 flex items-center gap-2">{friend.name}<Icon name="fa6-solid:arrow-up-right-from-square" class="text-xs opacity-30" /></div>
+					<p class="text-sm text-50 mt-1 line-clamp-2">{friend.description}</p>
+					<div class="flex gap-2 mt-2 flex-wrap">{friend.tags.map((tag) => <span class="text-xs text-[var(--primary)]">#{tag}</span>)}</div>
+				</div>
+			</a>
+		))}
+	</div>
+</MainGridLayout>

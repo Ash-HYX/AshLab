@@ -1,0 +1,136 @@
+---
+title: "除法同余与逆元"
+published: 2026-10-31
+updated: 2026-10-31
+description: "模意义下的除法、乘法逆元、费马小定理以及连续逆元的线性递推。"
+cover_path: ""
+categories:
+  - 数学
+  - 数论
+tags:
+  - 同余
+  - 逆元
+  - 费马小定理
+  - C++
+draft: false
+pinned: false
+featured: true
+slug: "modular-division-and-inverse"
+lang: "zh_CN"
+---
+
+## 背景
+要解决除法取模的问题，比如$$求mod=\frac{a}{b}\% m$$不能简单地
+$$
+\frac{a \% m}{b \% m}
+$$
+我们将`1/b`转换成这样的数`x`，使得
+$$mod=ax\%m$$
+在模 $m$ 意义下，如果整数 $a$ 和 $b$ 满足 $a \times b \equiv 1 \pmod{m}$，我们就说 $a$ 和 $b$ 在模 $m$ 意义下互为乘法逆元，记作 $b \equiv a^{-1} \pmod{m}$（或 $a \equiv b^{-1} \pmod{m}$）
+## 费马小定理求解逆元
+> **引理(费马小定理)**：若 $p$ 是质数，且整数 $a$ 与 $p$ 互质（即 $\gcd(a, p) = 1$），则有 $$a^{p-1} \equiv 1 \pmod{p}$$
+
+那么，因为$$a\cdot inv(a) \equiv1\pmod{p}\equiv a^{p-1}$$
+则$$inv(a)=a^{p-2}$$
+这个结果可以用[快速幂](/posts/matrix-fast-power/)得到。
+
+
+## 连续数字与连续阶乘逆元的线性递推
+```java
+连续数字逆元的线性递推
+在 % p意义下，
+1、2、3 . . . n，求每个数的逆元
+用inv[i]，代表i的逆元
+inv[1] = 1
+inv[i] = (int) (p - (long) inv[p % i] * (p / i) % p); // 从左往右线性递推
+连续阶乘逆元的线性递推
+在 % p意义下，
+1!、2!、3! . . . n!，求每个数的逆元，
+用inv[i]，代表i!的逆元
+先求n!乘法同余的结果，假设为a，然后求a的逆元，假设为b
+inv[n] = b
+inv[i] = ((long) (i + 1) * inv[i + 1]) % MOD; // 从右往左线性递推
+```
+#### 连续数字的线性递推
+测试链接：
+```cpp
+#include <bits/stdc++.h>
+using namespace std;
+using ll = long long;
+using ull = unsigned ll;
+constexpr char endl_nf = '\n';
+constexpr ll max_n = 3 * 1e6 + 7;
+ll inv[max_n];
+void solve(){
+    ll n, p;
+    cin >> n >> p;
+    inv[1] = 1;
+    cout << 1 << endl_nf;
+    for(int i = 2; i <= n; ++i){
+        inv[i] = (p - (inv[p % i] * (p / i) % p)) % p;
+        cout << inv[i] << endl_nf;
+    }
+}
+signed main(){
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+    cout.tie(nullptr); 
+
+    #ifdef AshLoopInput
+    int t;
+    cin >> t;
+    while(t--)
+    #endif
+
+    solve();
+
+    return 0;
+}
+```
+#### 连续阶乘的线性递推
+```cpp
+#include <bits/stdc++.h>
+using namespace std;
+const long long MOD = 1e9 + 7;
+const int N = 100000;
+long long fac[N + 1]; // 阶乘
+long long invFac[N + 1]; // 阶乘逆元
+// 快速幂
+long long qpow(long long a, long long b) {
+    long long ans = 1;
+    while (b) {
+        if (b & 1)
+            ans = ans * a % MOD;
+        a = a * a % MOD;
+        b >>= 1;
+    }
+    return ans;
+}
+// 预处理阶乘和逆阶乘
+void init() {
+    // 阶乘
+    fac[0] = 1;
+    for (int i = 1; i <= N; i++) {
+        fac[i] = fac[i - 1] * i % MOD;
+    }
+    // 最大阶乘逆元
+    invFac[N] = qpow(fac[N], MOD - 2);
+    // 递推求所有阶乘逆元
+    for (int i = N; i >= 1; i--) {
+        invFac[i - 1] = invFac[i] * i % MOD;
+    }
+}
+// 组合数 C(n,m)
+long long C(int n, int m) {
+
+    if (m < 0 || m > n)
+        return 0;
+
+    return fac[n] * invFac[m] % MOD * invFac[n - m] % MOD;
+}
+int main() {
+    init();
+    cout << C(5, 2) << endl; // 10
+    return 0;
+}
+```

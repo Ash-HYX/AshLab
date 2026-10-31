@@ -1,0 +1,34 @@
+---
+import type { CollectionEntry } from "astro:content";
+import { getPostCategories, getPostImage, getPostSlug } from "@utils/content-utils";
+import { getPostUrlBySlug } from "@utils/url-utils";
+import PostCard from "./PostCard.astro";
+
+interface Props {
+	posts: CollectionEntry<"posts">[];
+}
+
+const { posts } = Astro.props;
+---
+
+<div class="transition flex flex-col rounded-[var(--radius-large)] bg-[var(--card-bg)] py-1 md:py-0 md:bg-transparent md:gap-4 mb-4">
+	{posts.map((entry, index) => (
+		<PostCard
+			entry={entry}
+			title={entry.data.title}
+			tags={entry.data.tags}
+			categories={getPostCategories(entry.data)}
+			published={entry.data.published}
+			updated={entry.data.updated}
+			url={getPostUrlBySlug(getPostSlug(entry))}
+			image={getPostImage(entry.data)}
+			description={entry.data.description}
+			draft={entry.data.draft}
+			class="onload-animation"
+			style={`animation-delay: calc(var(--content-delay) + ${index * 50}ms);`}
+		/>
+	))}
+	{posts.length === 0 && (
+		<div class="card-base px-8 py-12 text-center text-50">这里暂时还没有文章。</div>
+	)}
+</div>

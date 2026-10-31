@@ -1,0 +1,16 @@
+---
+import { Icon } from "astro-icon/components";
+
+interface Props {
+	compact?: boolean;
+}
+
+const { compact = false } = Astro.props;
+---
+
+<div class="flex flex-row items-center" title="文章访问量">
+	{!compact && <div class="transition h-6 w-6 rounded-md bg-black/5 dark:bg-white/10 text-black/50 dark:text-white/50 flex items-center justify-center mr-2">
+		<Icon name="material-symbols:visibility-outline-rounded" />
+	</div>}
+	<span class="text-sm"><span id="busuanzi_value_page_pv">--</span> 次阅读</span>
+</div>

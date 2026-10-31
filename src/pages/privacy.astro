@@ -1,0 +1,18 @@
+---
+import PageHeader from "@components/PageHeader.astro";
+import MainGridLayout from "@layouts/MainGridLayout.astro";
+---
+
+<MainGridLayout title="隐私政策">
+	<PageHeader title="隐私政策" description="最后更新：2026-10-31" icon="material-symbols:shield-lock-outline-rounded" />
+	<article class="card-base px-6 md:px-9 py-7 mb-4 custom-md onload-animation">
+		<h2>信息收集</h2>
+		<p>本站不提供账号、评论或邮件订阅功能，不主动收集姓名、邮箱等个人资料。</p>
+		<h2>本地存储</h2>
+		<p>浏览器本地存储仅用于保存明暗主题、樱花效果和其他显示偏好。</p>
+		<h2>访问统计</h2>
+		<p>本站可能使用 Vercel Analytics 与公开页面访问计数服务获取匿名汇总数据，用于了解访问情况和改进内容。</p>
+		<h2>第三方链接</h2>
+		<p>本站包含 GitHub、Bilibili 和友链等外部链接。访问第三方站点后，其数据处理受对应站点政策约束。</p>
+	</article>
+</MainGridLayout>

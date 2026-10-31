@@ -1,0 +1,82 @@
+{
+  "$schema": "https://frontmatter.codes/frontmatter.schema.json",
+  "frontMatter.framework.id": "astro",
+  "frontMatter.preview.host": "http://localhost:4321",
+  "frontMatter.content.publicFolder": "public",
+  "frontMatter.content.pageFolders": [
+    {
+      "title": "posts",
+      "path": "[[workspace]]/src/content/posts"
+    }
+  ],
+  "frontMatter.taxonomy.contentTypes": [
+    {
+      "name": "default",
+      "pageBundle": true,
+      "previewPath": "'blog'",
+      "filePrefix": null,
+      "clearEmpty": true,
+      "fields": [
+        {
+          "title": "title",
+          "name": "title",
+          "type": "string",
+          "single": true
+        },
+        {
+          "title": "description",
+          "name": "description",
+          "type": "string"
+        },
+        {
+          "title": "published",
+          "name": "published",
+          "type": "datetime",
+          "default": "{{now}}",
+          "isPublishDate": true
+        },
+        {
+          "title": "cover",
+          "name": "cover_path",
+          "type": "image",
+          "isPreviewImage": true
+        },
+        {
+          "title": "tags",
+          "name": "tags",
+          "type": "list"
+        },
+        {
+		  "title": "categories",
+		  "name": "categories",
+		  "type": "list"
+        },
+        {
+          "title": "draft",
+          "name": "draft",
+          "type": "boolean"
+        },
+        {
+		  "title": "pinned",
+		  "name": "pinned",
+		  "type": "boolean"
+		},
+		{
+		  "title": "featured",
+		  "name": "featured",
+		  "type": "boolean"
+		},
+		{
+		  "title": "slug",
+		  "name": "slug",
+		  "type": "string"
+		},
+		{
+		  "title": "language",
+		  "name": "lang",
+          "type": "string"
+        }
+      ]
+    }
+  ]
+}

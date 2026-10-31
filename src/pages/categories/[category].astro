@@ -1,0 +1,25 @@
+---
+import PageHeader from "@components/PageHeader.astro";
+import PostList from "@components/PostList.astro";
+import MainGridLayout from "@layouts/MainGridLayout.astro";
+import { getCategoryList, getPostCategories, getSortedPosts } from "@utils/content-utils";
+
+export async function getStaticPaths() {
+	const categories = await getCategoryList();
+	const posts = await getSortedPosts();
+	return categories.map((category) => ({
+		params: { category: category.name },
+		props: {
+			category: category.name,
+			posts: posts.filter((post) => getPostCategories(post.data).includes(category.name)),
+		},
+	}));
+}
+
+const { category, posts } = Astro.props;
+---
+
+<MainGridLayout title={category}>
+	<PageHeader title={category} description={`共 ${posts.length} 篇文章`} icon="material-symbols:book-2-outline-rounded" />
+	<PostList posts={posts} />
+</MainGridLayout>

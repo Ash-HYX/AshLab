@@ -1,0 +1,25 @@
+---
+import PageHeader from "@components/PageHeader.astro";
+import PostList from "@components/PostList.astro";
+import MainGridLayout from "@layouts/MainGridLayout.astro";
+import { getSortedPosts, getTagList } from "@utils/content-utils";
+
+export async function getStaticPaths() {
+	const tags = await getTagList();
+	const posts = await getSortedPosts();
+	return tags.map((tag) => ({
+		params: { tag: tag.name },
+		props: {
+			tag: tag.name,
+			posts: posts.filter((post) => post.data.tags.includes(tag.name)),
+		},
+	}));
+}
+
+const { tag, posts } = Astro.props;
+---
+
+<MainGridLayout title={`#${tag}`}>
+	<PageHeader title={`#${tag}`} description={`共 ${posts.length} 篇文章`} icon="material-symbols:tag-rounded" />
+	<PostList posts={posts} />
+</MainGridLayout>

@@ -1,0 +1,21 @@
+---
+import { Icon } from "astro-icon/components";
+
+interface Props {
+	title: string;
+	description?: string;
+	icon: string;
+}
+
+const { title, description, icon } = Astro.props;
+---
+
+<header class="card-base mb-4 px-6 md:px-8 py-6 onload-animation">
+	<div class="flex items-center gap-3">
+		<div class="meta-icon !mr-0 !w-10 !h-10"><Icon name={icon} class="text-2xl" /></div>
+		<div class="min-w-0">
+			<h1 class="text-2xl font-bold text-90">{title}</h1>
+			{description && <p class="mt-1 text-sm text-50">{description}</p>}
+		</div>
+	</div>
+</header>

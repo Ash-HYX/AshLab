@@ -1,0 +1,16 @@
+---
+import PageHeader from "@components/PageHeader.astro";
+import MainGridLayout from "@layouts/MainGridLayout.astro";
+---
+
+<MainGridLayout title="版权声明">
+	<PageHeader title="版权声明" description="程序、内容与素材的权利边界" icon="material-symbols:copyright-rounded" />
+	<article class="card-base px-6 md:px-9 py-7 mb-4 custom-md onload-animation">
+		<h2>原创内容</h2>
+		<p>除非文章另有说明，Ash 原创文章采用 CC BY-NC-SA 4.0 许可。转载时请注明作者、文章标题和原始链接，并以相同方式共享。</p>
+		<h2>网站程序</h2>
+		<p>本站基于 Fuwari 二次开发。Fuwari 及其上游代码遵循 MIT License，相关版权归原作者所有。</p>
+		<h2>第三方素材</h2>
+		<p>头像、横幅、图标和文章引用素材分别遵循其原许可。来源与授权不明的候选素材不会进入生产部署。</p>
+	</article>
+</MainGridLayout>

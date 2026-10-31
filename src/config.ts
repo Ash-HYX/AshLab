@@ -7,6 +7,11 @@ import type {
 } from "./types/config";
 import { LinkPreset } from "./types/config";
 
+const bannerSources = Array.from(
+	{ length: 100 },
+	(_, index) => `/assets/banners/optimized/anime-bg-${String(index + 1).padStart(3, "0")}.webp`,
+);
+
 export const siteConfig: SiteConfig = {
 	title: "Ash",
 	subtitle: "不诱于誉，不恐于诽，率道而行，端然正己。",
@@ -17,15 +22,8 @@ export const siteConfig: SiteConfig = {
 	},
 	banner: {
 		enable: true,
-		src: "/assets/banners/optimized/banner-01-spring-reading.webp",
-		sources: [
-			"/assets/banners/optimized/banner-01-spring-reading.webp",
-			"/assets/banners/optimized/banner-02-rooftop.webp",
-			"/assets/banners/optimized/banner-03-rain-train.webp",
-			"/assets/banners/optimized/banner-04-coding-night.webp",
-			"/assets/banners/optimized/banner-05-autumn-shrine.webp",
-			"/assets/banners/optimized/banner-06-seaside.webp",
-		],
+		src: bannerSources[0],
+		sources: bannerSources,
 		position: "center", // Equivalent to object-position, only supports 'top', 'center', 'bottom'. 'center' by default
 		credit: {
 			enable: false, // Display the credit text of the banner image
@@ -38,12 +36,9 @@ export const siteConfig: SiteConfig = {
 		depth: 2, // Maximum heading depth to show in the table, from 1 to 3
 	},
 	favicon: [
-		// Leave this array empty to use the default favicon
-		// {
-		//   src: '/favicon/icon.png',    // Path of the favicon, relative to the /public directory
-		//   theme: 'light',              // (Optional) Either 'light' or 'dark', set only if you have different favicons for light and dark mode
-		//   sizes: '32x32',              // (Optional) Size of the favicon, set only if you have favicons of different sizes
-		// }
+		{ src: "/favicon/avatar-32.png", sizes: "32x32" },
+		{ src: "/favicon/avatar-180.png", sizes: "180x180" },
+		{ src: "/favicon/avatar-192.png", sizes: "192x192" },
 	],
 };
 
@@ -62,7 +57,7 @@ export const navBarConfig: NavBarConfig = {
 export const profileConfig: ProfileConfig = {
 	avatar: "/assets/profile/avatar.jpg",
 	name: "Ash",
-	bio: "不诱于誉，不恐于诽，率道而行，端然正己。",
+	bio: "不诱于誉，不恐于诽，\n率道而行，端然正己。",
 	links: [
 		{
 			name: "GitHub",

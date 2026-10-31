@@ -371,24 +371,72 @@ function showBanner() {
 	banner.classList.remove('opacity-0', 'scale-105');
 }
 
-function selectRandomBanner() {
+const BANNER_ROTATION_INTERVAL = 20_000;
+let bannerRotationTimer: number | undefined;
+
+function getBannerElements() {
 	const wrapper = document.getElementById('banner');
-	const image = wrapper?.querySelector('img');
+	const image = wrapper?.querySelector<HTMLImageElement>('img');
 	const encodedSources = wrapper?.dataset.imageSources;
-	if (!image || !encodedSources) return;
+	if (!image || !encodedSources) return null;
+
 	try {
-		const sources = JSON.parse(encodedSources);
-		if (!Array.isArray(sources) || sources.length === 0) return;
-		const sessionKey = 'ash-banner-index';
-		let index = Number(sessionStorage.getItem(sessionKey));
-		if (!Number.isInteger(index) || index < 0 || index >= sources.length) {
-			index = Math.floor(Math.random() * sources.length);
-			sessionStorage.setItem(sessionKey, String(index));
-		}
-		image.src = sources[index];
+		const sources = JSON.parse(encodedSources) as unknown;
+		if (!Array.isArray(sources) || sources.length === 0) return null;
+		return { image, sources: sources.filter((source): source is string => typeof source === 'string') };
 	} catch (error) {
-		console.warn('Unable to select a random banner.', error);
+		console.warn('Unable to read banner sources.', error);
+		return null;
 	}
+}
+
+function getRandomBannerIndex(length: number, currentIndex: number) {
+	if (length <= 1) return 0;
+	let nextIndex = currentIndex;
+	while (nextIndex === currentIndex) {
+		nextIndex = Math.floor(Math.random() * length);
+	}
+	return nextIndex;
+}
+
+function selectRandomBanner(initial = false) {
+	const elements = getBannerElements();
+	if (!elements || elements.sources.length === 0) return;
+
+	const sessionKey = 'ash-banner-index';
+	const storedIndex = Number(sessionStorage.getItem(sessionKey));
+	const currentIndex = Number.isInteger(storedIndex) && storedIndex >= 0 && storedIndex < elements.sources.length
+		? storedIndex
+		: -1;
+	const nextIndex = getRandomBannerIndex(elements.sources.length, currentIndex);
+	const nextSource = elements.sources[nextIndex];
+	const applySource = () => {
+		elements.image.src = nextSource;
+		sessionStorage.setItem(sessionKey, String(nextIndex));
+	};
+
+	if (initial) {
+		applySource();
+		return;
+	}
+
+	const preloader = new Image();
+	preloader.onload = () => {
+		elements.image.classList.add('opacity-0');
+		window.setTimeout(() => {
+			applySource();
+			requestAnimationFrame(() => elements.image.classList.remove('opacity-0'));
+		}, 700);
+	};
+	preloader.onerror = () => console.warn(`Unable to preload banner: ${nextSource}`);
+	preloader.src = nextSource;
+}
+
+function startBannerRotation() {
+	if (bannerRotationTimer) window.clearInterval(bannerRotationTimer);
+	bannerRotationTimer = window.setInterval(() => {
+		if (!document.hidden) selectRandomBanner();
+	}, BANNER_ROTATION_INTERVAL);
 }
 
 function init() {
@@ -396,7 +444,8 @@ function init() {
 	loadTheme();
 	loadHue();
 	initCustomScrollbar();
-	selectRandomBanner();
+	selectRandomBanner(true);
+	startBannerRotation();
 	showBanner();
 }
 

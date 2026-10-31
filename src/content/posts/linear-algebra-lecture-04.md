@@ -13,7 +13,7 @@ tags:
   - LU分解
   - 消元法
   - 置换矩阵
-draft: true
+draft: false
 pinned: false
 featured: false
 slug: "linear-algebra-lecture-04"

@@ -13,7 +13,7 @@ tags:
   - 转置
   - 向量空间
   - 子空间
-draft: true
+draft: false
 pinned: false
 featured: false
 slug: "linear-algebra-lecture-05"

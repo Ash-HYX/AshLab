@@ -13,7 +13,7 @@ tags:
   - 线性方程组
   - 秩
   - 特解
-draft: true
+draft: false
 pinned: false
 featured: false
 slug: "linear-algebra-lecture-08"

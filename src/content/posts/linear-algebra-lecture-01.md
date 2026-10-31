@@ -12,7 +12,7 @@ tags:
   - MIT 18.06
   - 线性方程组
   - 列图像
-draft: true
+draft: false
 pinned: false
 featured: false
 slug: "linear-algebra-lecture-01"

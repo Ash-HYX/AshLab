@@ -13,7 +13,7 @@ tags:
   - 线性无关
   - 基
   - 维数
-draft: true
+draft: false
 pinned: false
 featured: false
 slug: "linear-algebra-lecture-09"

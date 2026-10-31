@@ -13,7 +13,7 @@ tags:
   - 矩阵空间
   - 秩1矩阵
   - 子空间
-draft: true
+draft: false
 pinned: false
 featured: false
 slug: "linear-algebra-lecture-11"

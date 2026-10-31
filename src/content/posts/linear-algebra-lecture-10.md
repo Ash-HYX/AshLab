@@ -13,7 +13,7 @@ tags:
   - 四个基本子空间
   - 左零空间
   - 秩
-draft: true
+draft: false
 pinned: false
 featured: false
 slug: "linear-algebra-lecture-10"

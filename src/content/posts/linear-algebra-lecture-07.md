@@ -13,7 +13,7 @@ tags:
   - 零空间
   - RREF
   - 秩
-draft: true
+draft: false
 pinned: false
 featured: false
 slug: "linear-algebra-lecture-07"

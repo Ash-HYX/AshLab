@@ -13,7 +13,7 @@ tags:
   - 矩阵乘法
   - 逆矩阵
   - 奇异矩阵
-draft: true
+draft: false
 pinned: false
 featured: false
 slug: "linear-algebra-lecture-03"

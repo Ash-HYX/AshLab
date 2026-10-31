@@ -13,7 +13,7 @@ tags:
   - 图论
   - 关联矩阵
   - 欧拉公式
-draft: true
+draft: false
 pinned: false
 featured: false
 slug: "linear-algebra-lecture-12"

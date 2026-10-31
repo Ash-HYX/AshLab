@@ -13,7 +13,7 @@ tags:
   - 列空间
   - 零空间
   - 子空间
-draft: true
+draft: false
 pinned: false
 featured: false
 slug: "linear-algebra-lecture-06"

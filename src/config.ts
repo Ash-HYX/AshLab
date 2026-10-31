@@ -8,9 +8,9 @@ import type {
 import { LinkPreset } from "./types/config";
 
 const bannerSources = Array.from(
-	{ length: 100 },
+	{ length: 7 },
 	(_, index) =>
-		`/assets/banners/optimized/anime-bg-${String(index + 1).padStart(3, "0")}.webp`,
+		`/assets/banners/optimized/${String(index + 1).padStart(3, "0")}.webp`,
 );
 
 export const siteConfig: SiteConfig = {

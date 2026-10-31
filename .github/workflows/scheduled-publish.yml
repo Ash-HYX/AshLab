@@ -11,11 +11,13 @@ permissions:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    env:
+      VERCEL_DEPLOY_HOOK: ${{ secrets.VERCEL_DEPLOY_HOOK }}
     steps:
       - name: Trigger Vercel deployment
-        if: ${{ secrets.VERCEL_DEPLOY_HOOK != '' }}
-        run: curl --fail --silent --show-error --request POST "${{ secrets.VERCEL_DEPLOY_HOOK }}"
+        if: ${{ env.VERCEL_DEPLOY_HOOK != '' }}
+        run: curl --fail --silent --show-error --request POST "$VERCEL_DEPLOY_HOOK"
 
       - name: Explain missing deploy hook
-        if: ${{ secrets.VERCEL_DEPLOY_HOOK == '' }}
+        if: ${{ env.VERCEL_DEPLOY_HOOK == '' }}
         run: echo "Set the VERCEL_DEPLOY_HOOK repository secret after creating the Vercel project."
